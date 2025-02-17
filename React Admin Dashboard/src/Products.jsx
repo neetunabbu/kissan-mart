@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "./firebaseConfig";
 import "./Products.css";
@@ -10,6 +10,8 @@ const Products = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editProductId, setEditProductId] = useState(null);
   const [newProduct, setNewProduct] = useState({
     prodName: "",
     category: "",
@@ -53,7 +55,28 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  const toggleForm = () => setShowForm(!showForm);
+  const toggleForm = () => {
+    setShowForm(!showForm);
+    if (showForm) {
+      setIsEditMode(false);
+      setNewProduct({
+        prodName: "",
+        category: "",
+        subcategory: "",
+        subTitle: "",
+        description: "",
+        cost: "",
+        dealerCost: "",
+        discount: "",
+        gst: "",
+        stockQuantity: "",
+        isStockAvailable: true,
+        moq: "",
+        imageUrl: ""
+      });
+      setImage(null);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -73,11 +96,25 @@ const Products = () => {
         await uploadBytes(imageRef, image);
         imageUrl = await getDownloadURL(imageRef);
       }
-      
+
       const productsCollection = collection(db, "products");
       const newProductData = { ...newProduct, imageUrl, createdAt: new Date() };
-      await addDoc(productsCollection, newProductData);
-      setProducts([...products, { ...newProductData, createdAt: new Date().toLocaleString() }]);
+
+      if (isEditMode) {
+        const productDocRef = doc(db, "products", editProductId);
+        await updateDoc(productDocRef, newProductData);
+        setProducts(
+          products.map((product) =>
+            product.id === editProductId ? { ...product, ...newProductData } : product
+          )
+        );
+        setIsEditMode(false);
+        setEditProductId(null);
+      } else {
+        await addDoc(productsCollection, newProductData);
+        setProducts([...products, { ...newProductData, createdAt: new Date().toLocaleString() }]);
+      }
+
       setNewProduct({
         prodName: "",
         category: "",
@@ -96,7 +133,38 @@ const Products = () => {
       setImage(null);
       setShowForm(false);
     } catch (error) {
-      console.error("Error adding product:", error);
+      console.error("Error saving product:", error);
+    }
+  };
+
+  const handleEdit = (product) => {
+    setIsEditMode(true);
+    setEditProductId(product.id);
+    setNewProduct({
+      prodName: product.prodName,
+      category: product.category,
+      subcategory: product.subcategory,
+      subTitle: product.subTitle,
+      description: product.description,
+      cost: product.cost,
+      dealerCost: product.dealerCost,
+      discount: product.discount,
+      gst: product.gst,
+      stockQuantity: product.stockQuantity,
+      isStockAvailable: product.isStockAvailable,
+      moq: product.moq,
+      imageUrl: product.imageUrl
+    });
+    setShowForm(true);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const productDocRef = doc(db, "products", id);
+      await deleteDoc(productDocRef);
+      setProducts(products.filter((product) => product.id !== id));
+    } catch (error) {
+      console.error("Error deleting product:", error);
     }
   };
 
@@ -104,7 +172,9 @@ const Products = () => {
     <main className="main-container">
       <div className="main-title">
         <h3>PRODUCTS MANAGEMENT</h3>
-        <button className="btn btn-primary" onClick={toggleForm}>{showForm ? "Cancel" : "Add Product"}</button>
+        <button className="btn btn-primary" onClick={toggleForm}>
+          {showForm ? (isEditMode ? "Cancel Edit" : "Cancel") : "Add Product"}
+        </button>
       </div>
 
       {showForm && (
@@ -121,7 +191,7 @@ const Products = () => {
           <input type="number" name="moq" placeholder="Minimum Order Quantity" value={newProduct.moq} onChange={handleInputChange} required />
           <input type="number" name="stockQuantity" placeholder="Stock Quantity" value={newProduct.stockQuantity} onChange={handleInputChange} required />
           <input type="file" accept="image/*" onChange={handleImageChange} />
-          <button type="submit" className="btn btn-success">Add Product</button>
+          <button type="submit" className="btn btn-success">{isEditMode ? "Update Product" : "Add Product"}</button>
         </form>
       )}
 
@@ -141,7 +211,7 @@ const Products = () => {
               <th>Discount</th>
               <th>GST</th>
               <th>Stock Quantity</th>
-              <th>Created At</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -155,9 +225,12 @@ const Products = () => {
                   <td>{product.cost || "N/A"}</td>
                   <td>{product.dealerCost || "N/A"}</td>
                   <td>{product.discount || "N/A"}</td>
-                  <td>{product.gst || "N/A"}</td> 
+                  <td>{product.gst || "N/A"}</td>
                   <td>{product.stockQuantity || "N/A"}</td>
-                  <td>{product.createdAt || "N/A"}</td>
+                  <td>
+                    <button className="btn btn-warning mx-2" onClick={() => handleEdit(product)}>Edit</button>
+                    <button className="btn btn-danger" onClick={() => handleDelete(product.id)}>Delete</button>
+                  </td>
                 </tr>
               ))
             ) : (
