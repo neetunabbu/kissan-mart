@@ -23,11 +23,11 @@ function Sidebar() {
             <i className="bi bi-tags me-2"></i> Categories
           </Link>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link to="/Subcategories" className="nav-link text-white">
             <i className="bi bi-list-nested me-2"></i> Subcategories
           </Link>
-        </li>
+        </li> */}
         <li className="nav-item">
           <Link to="/products" className="nav-link text-white">
             <i className="bi bi-box-seam me-2"></i> Products
