@@ -24,6 +24,11 @@ function Sidebar() {
           </Link>
         </li>
         <li className="nav-item">
+          <Link to="/Subcategories" className="nav-link text-white">
+            <i className="bi bi-list-nested me-2"></i> Subcategories
+          </Link>
+        </li>
+        <li className="nav-item">
           <Link to="/products" className="nav-link text-white">
             <i className="bi bi-box-seam me-2"></i> Products
           </Link>
