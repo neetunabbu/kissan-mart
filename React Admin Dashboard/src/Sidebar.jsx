@@ -35,7 +35,7 @@ function Sidebar() {
         </li>
         <li className="nav-item">
           <Link to="/customers" className="nav-link text-white">
-            <i className="bi bi-people me-2"></i> Customers
+            <i className="bi bi-people me-2"></i> Customers/Dealers
           </Link>
         </li>
         <li className="nav-item">

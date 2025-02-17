@@ -43,7 +43,7 @@ const Customers = () => {
         <h3>CUSTOMERS MANAGEMENT</h3>
       </div>
       <div className="user-list">
-        <h2>Customers List</h2>
+        <h2>Customers/Dealers List</h2>
         {loading && <p>Loading...</p>}
         {error && <p className="error-message">{error}</p>}
         <table className="user-table">
