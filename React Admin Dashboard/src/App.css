@@ -1,0 +1,86 @@
+/* Sidebar styling */
+.sidebar {
+  width: 250px;
+  background-color: #4CAF50; /* Greenish color */
+  color: white; /* Text color for better contrast */
+  height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: fixed; /* Fixes sidebar position */
+  top: 0;
+  left: 0;
+  overflow-y: auto; /* Scrollable if content exceeds */
+  z-index: 1000; /* Ensures it stays above other elements */
+}
+
+/* Ensure main content doesn't get hidden under sidebar */
+.main-content {
+  margin-left: 250px; /* Same as sidebar width */
+  padding: 20px;
+}
+
+/* Sidebar heading */
+.sidebar h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+/* Sidebar menu */
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  flex-grow: 1;
+}
+
+.sidebar ul li {
+  margin: 15px 0;
+}
+
+/* Sidebar links */
+.sidebar ul li a {
+  text-decoration: none;
+  color: white; /* Link color */
+  font-weight: bold; /* Make links bold */
+  display: flex;
+  align-items: center;
+}
+
+.sidebar ul li a:hover {
+  color: #C8E6C9; /* Light green hover color */
+  text-decoration: underline; /* Add underline on hover */
+}
+
+/* Main content styling */
+.flex-grow-1 {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/* Page content styling */
+.container {
+  padding: 20px;
+  transform: scale(1); /* Default zoom level */
+  transition: transform 0.3s ease-in-out; /* Smooth zoom effect */
+}
+
+/* Responsive Zoom Control */
+@media (max-width: 1200px) {
+  .container {
+    transform: scale(0.95); /* Slightly zoomed out */
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px; /* Smaller sidebar for mobile */
+  }
+
+  .main-content {
+    margin-left: 200px;
+  }
+
+  .container {
+    transform: scale(0.9); /* More zoom out for small screens */
+  }
+}

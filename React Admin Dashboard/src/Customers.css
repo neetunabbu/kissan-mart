@@ -1,0 +1,115 @@
+/* General container styling */
+.main-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background-color: #fff3cd; /* Light saffron background */
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Title Styling */
+.main-title h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #000; /* Black text */
+  text-transform: uppercase;
+}
+
+/* User List Heading */
+.user-list h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: #000; /* Black text */
+}
+
+/* Add user button */
+.add-user-button {
+  margin-bottom: 20px;
+}
+
+/* Add user form styling */
+.add-user-form {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.add-user-form h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #007bff; /* Blue header */
+}
+
+/* Form Table Styling */
+.add-user-form table.form-table td {
+  padding: 10px;
+}
+
+.add-user-form table.form-table input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Button Styling */
+.add-user-form button {
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+.add-user-form button:hover {
+  opacity: 0.85;
+}
+
+/* User List Styling */
+.user-list {
+  margin-top: 20px;
+}
+
+.user-list .error-message {
+  color: #dc3545;
+  margin-bottom: 15px;
+}
+
+/* Blue-Themed Table Styling */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #e3f2fd; /* Light blue background */
+}
+
+.user-table th,
+.user-table td {
+  padding: 12px;
+  border: 1px solid #90caf9; /* Light blue border */
+  text-align: left;
+  color: #0d47a1; /* Dark blue text */
+}
+
+.user-table th {
+  background-color: #2196f3; /* Bright blue header */
+  font-weight: bold;
+  color: white;
+}
+
+.user-table tbody tr:hover {
+  background-color: #bbdefb; /* Light blue hover effect */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .user-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}

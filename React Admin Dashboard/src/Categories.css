@@ -1,0 +1,85 @@
+.main-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+  }
+  
+  .main-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .main-title h3 {
+    font-weight: bold;
+    color: #343a40;
+  }
+  
+  .category-form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .category-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .category-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .category-form button:hover {
+    background-color: #218838;
+  }
+  
+  .category-list h2 {
+    margin-bottom: 15px;
+    color: #343a40;
+  }
+  
+  .category-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .category-table th, 
+  .category-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .category-table th {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .category-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .error-message {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+  }
+  

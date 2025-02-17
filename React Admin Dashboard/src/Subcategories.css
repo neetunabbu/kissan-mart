@@ -1,0 +1,104 @@
+.main-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+  }
+  
+  .main-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .main-title h3 {
+    margin: 0;
+  }
+  
+  .subcategory-form {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 15px;
+  }
+  
+  .subcategory-form input {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .subcategory-form button {
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .subcategory-form button:hover {
+    background-color: #218838;
+  }
+  
+  .subcategory-list {
+    margin-top: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .subcategory-list h2 {
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .subcategory-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .subcategory-table th,
+  .subcategory-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .subcategory-table th {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .subcategory-table img {
+    border-radius: 5px;
+  }
+  
+  .subcategory-table .btn-info {
+    background-color: #17a2b8;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .subcategory-table .btn-info:hover {
+    background-color: #138496;
+  }
+  
+  .error-message {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
