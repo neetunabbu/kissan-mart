@@ -1,127 +1,138 @@
-/* Products.css */
+/* Updated Products.css */
 
-.main-container {
+.container {
   padding: 20px;
-  background-color: #f8f9fa;
+  background-color: #f4f6f9;
   min-height: 100vh;
 }
 
-.main-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding: 10px;
-  background: #007bff;
-  color: white;
-  border-radius: 8px;
-}
-
-.main-title h3 {
-  margin: 0;
-  flex-grow: 1;
+h3 {
   text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #333;
 }
 
 .btn-primary {
-  padding: 8px 15px;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.product-list {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.product-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.product-table th, 
-.product-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
-}
-
-.product-table th {
+  display: block;
+  width: max-content;
+  margin: 0 auto 20px;
   background-color: #007bff;
-  color: white;
+  border: none;
 }
 
-.product-table tbody tr:nth-child(even) {
-  background-color: #f2f2f2;
+.btn-primary:hover {
+  background-color: #0056b3;
 }
 
-.product-table tbody tr:hover {
-  background-color: #e9ecef;
+/* Product Form */
+.form-container {
+  display: none;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.error-message {
-  color: red;
-  text-align: center;
-  font-weight: bold;
+.form-container.show {
+  display: block;
+  opacity: 1;
+  transform: scale(1);
 }
 
-/* Styles for the Add Product Form */
-.product-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
   padding: 20px;
-  background: #f8f9fa;
+  background: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  align-items: center;
-  justify-content: center;
 }
 
-.product-form input {
-  flex: 1 1 calc(33% - 10px);
-  padding: 8px;
+form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+form input[type="file"] {
+  grid-column: span 2;
+}
+
+form button {
+  grid-column: span 2;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #28a745;
+  color: white;
+}
+
+form button:hover {
+  background-color: #218838;
+}
+
+/* Product Table */
+.table {
+  width: 100%;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table th, .table td {
+  padding: 12px;
+  text-align: center;
   border: 1px solid #ddd;
-  border-radius: 5px;
 }
 
-.product-form .btn-submit {
-  padding: 5px 10px;
-  font-size: 14px;
-  background-color: black;
+.table th {
+  background-color: #343a40;
   color: white;
-  border: none;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.table tbody tr:hover {
+  background-color: #e2e6ea;
+}
+
+/* Product Image */
+td img {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+/* Buttons */
+.btn-warning, .btn-danger {
+  padding: 8px 12px;
+  font-size: 14px;
   border-radius: 5px;
   cursor: pointer;
-  width: auto;
-  align-self: center;
 }
 
-.product-form .btn-submit:hover {
-  background-color: #333;
+.btn-warning {
+  background-color: #ffc107;
+  color: black;
 }
 
-.product-form .btn-cancel {
-  padding: 5px 10px;
-  font-size: 14px;
-  background-color: red;
+.btn-warning:hover {
+  background-color: #e0a800;
+}
+
+.btn-danger {
+  background-color: #dc3545;
   color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: auto;
-  align-self: center;
 }
 
-.product-form .btn-cancel:hover {
-  background-color: darkred;
+.btn-danger:hover {
+  background-color: #c82333;
 }

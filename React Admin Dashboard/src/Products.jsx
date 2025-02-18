@@ -3,6 +3,7 @@ import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from "firebase
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "./firebaseConfig";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./Products.css";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -62,7 +63,7 @@ const Products = () => {
     if (image) {
       const imageRef = ref(storage, `products/${image.name}`);
       await uploadBytes(imageRef, image);
-      imageUrl = await getDownloadURL(imageRef);
+      imageUrl = await getDownloadURL(imageRef);2
     }
 
     const newProductData = { ...newProduct, imageUrl };
