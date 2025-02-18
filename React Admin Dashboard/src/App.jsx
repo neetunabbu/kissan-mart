@@ -6,7 +6,8 @@ import Customers from "./Customers";
 import Products from "./Products";
 import Orders from "./Orders";
 import Categories from "./Categories";
-import Subcategories from "./Subcategories"; // Import Subcategories component
+import Subcategories from "./Subcategories";
+import MultiCategory from "./MultiCategory";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -14,7 +15,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 function App() {
   return (
     <Router>
-      <div className="d-flex">
+      <div className="d-flex main-container">
         <Sidebar />
         <div className="flex-grow-1 p-4">
           <Routes>
@@ -23,7 +24,8 @@ function App() {
             <Route path="/customers" element={<Customers />} />
             <Route path="/products" element={<Products />} />
             <Route path="/categories" element={<Categories />} />
-            <Route path="/subcategories/:categoryId" element={<Subcategories />} /> 
+            <Route path="/subcategories/:categoryId" element={<Subcategories />} />
+            <Route path="/multiCategory/:categoryId" element={<MultiCategory />} />
           </Routes>
         </div>
       </div>

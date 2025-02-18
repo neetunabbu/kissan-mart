@@ -120,6 +120,7 @@ const Categories = () => {
               <th>Category Name</th>
               <th>Active</th>
               <th>Subcategory</th>
+              <th>MultiCategory</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -136,14 +137,17 @@ const Categories = () => {
                     <button className="btn btn-info" onClick={() => navigate(`/subcategories/${category.id}`)}>View</button>
                   </td>
                   <td>
-                  <button className="btn btn-warning me-2" onClick={() => setEditCategory(category)}>Edit</button>
-                  <button className="btn btn-danger" onClick={() => handleDeleteCategory(category.id)}>Delete</button>
-                </td>
+                    <button className="btn btn-info" onClick={() => navigate(`/multiCategory/${category.id}`)}>View</button>
+                  </td>
+                  <td>
+                    <button className="btn btn-warning me-2" onClick={() => setEditCategory(category)}>Edit</button>
+                    <button className="btn btn-danger" onClick={() => handleDeleteCategory(category.id)}>Delete</button>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" style={{ textAlign: "center" }}>No categories found.</td>
+                <td colSpan="6" style={{ textAlign: "center" }}>No categories found.</td>
               </tr>
             )}
           </tbody>

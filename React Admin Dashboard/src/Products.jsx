@@ -11,15 +11,18 @@ const Products = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [editProductId, setEditProductId] = useState(null);
   const [image, setImage] = useState(null);
+  const [productType, setProductType] = useState("dealer"); // Default to dealer
   const [newProduct, setNewProduct] = useState({
     prodName: "",
     category: "",
     subcategory: "",
     cost: "",
     dealerCost: "",
-    discount: "",
+    customerCost: "",
     gst: "",
+    moq: "",
     stockQuantity: "",
+    stockAvailable: false,
     imageUrl: ""
   });
 
@@ -40,20 +43,42 @@ const Products = () => {
       subcategory: "",
       cost: "",
       dealerCost: "",
-      discount: "",
+      customerCost: "",
       gst: "",
+      moq: "",
       stockQuantity: "",
+      stockAvailable: false,
       imageUrl: ""
     });
     setImage(null);
+    setProductType("dealer"); // Reset to dealer by default
   };
 
   const handleInputChange = (e) => {
-    setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
+    const { name, value, type, checked } = e.target;
+    setNewProduct({ ...newProduct, [name]: type === "checkbox" ? checked : value });
   };
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
+  };
+
+  const handleProductTypeChange = (e) => {
+    setProductType(e.target.value);
+    setNewProduct({
+      ...newProduct,
+      dealerCost: "",
+      customerCost: ""
+    });
+  };
+
+  const calculatePriceBasedOnMOQ = (quantity) => {
+    // Check if the quantity is greater than or equal to MOQ for special pricing
+    const price = {
+      dealer: quantity >= newProduct.moq ? newProduct.dealerCost : newProduct.dealerCost * 1.1, // 10% more if below MOQ for dealer
+      customer: quantity >= newProduct.moq ? newProduct.customerCost : newProduct.customerCost * 1.2 // 20% more if below MOQ for customer
+    };
+    return price;
   };
 
   const handleSubmit = async (e) => {
@@ -62,11 +87,29 @@ const Products = () => {
 
     if (image) {
       const imageRef = ref(storage, `products/${image.name}`);
-      await uploadBytes(imageRef, image);
-      imageUrl = await getDownloadURL(imageRef);2
+      
+      // Ensure image is uploaded successfully
+      await uploadBytes(imageRef, image).then(() => {
+        // Get the download URL after successful upload
+        getDownloadURL(imageRef).then((url) => {
+          imageUrl = url;  // Update imageUrl with the Firebase URL
+        }).catch((err) => {
+          console.error("Error getting download URL: ", err);
+        });
+      }).catch((err) => {
+        console.error("Error uploading image: ", err);
+      });
     }
 
-    const newProductData = { ...newProduct, imageUrl };
+    // Calculate the new prices based on MOQ
+    const { dealer, customer } = calculatePriceBasedOnMOQ(newProduct.stockQuantity);
+
+    const newProductData = { 
+      ...newProduct, 
+      imageUrl, 
+      dealerCost: productType === "dealer" ? dealer : "", 
+      customerCost: productType === "customer" ? customer : "" 
+    };
 
     if (isEditMode) {
       await updateDoc(doc(db, "products", editProductId), newProductData);
@@ -84,13 +127,27 @@ const Products = () => {
   const handleEdit = (product) => {
     setIsEditMode(true);
     setEditProductId(product.id);
-    setNewProduct(product);
+    setProductType(product.dealerCost ? "dealer" : "customer");
+    setNewProduct({
+      prodName: product.prodName,
+      category: product.category,
+      subcategory: product.subcategory,
+      cost: product.cost,
+      dealerCost: product.dealerCost,
+      customerCost: product.customerCost,
+      gst: product.gst,
+      moq: product.moq,
+      stockQuantity: product.stockQuantity,
+      stockAvailable: product.stockAvailable,
+      imageUrl: product.imageUrl,
+    });
+    setImage(null);
     setShowForm(true);
   };
 
-  const handleDelete = async (id) => {
-    await deleteDoc(doc(db, "products", id));
-    setProducts(products.filter((product) => product.id !== id));
+  const handleDelete = async (productId) => {
+    await deleteDoc(doc(db, "products", productId));
+    setProducts(products.filter((product) => product.id !== productId));
   };
 
   return (
@@ -103,10 +160,31 @@ const Products = () => {
           <input type="text" name="category" placeholder="Category" value={newProduct.category} onChange={handleInputChange} required />
           <input type="text" name="subcategory" placeholder="Subcategory" value={newProduct.subcategory} onChange={handleInputChange} />
           <input type="number" name="cost" placeholder="Cost" value={newProduct.cost} onChange={handleInputChange} required />
-          <input type="number" name="dealerCost" placeholder="Dealer Cost" value={newProduct.dealerCost} onChange={handleInputChange} required />
-          <input type="number" name="discount" placeholder="Discount (%)" value={newProduct.discount} onChange={handleInputChange} required />
+          <label>
+            <input type="radio" name="productType" value="dealer" checked={productType === "dealer"} onChange={handleProductTypeChange} /> Dealer
+          </label>
+          <label>
+            <input type="radio" name="productType" value="customer" checked={productType === "customer"} onChange={handleProductTypeChange} /> Customer
+          </label>
+
+          {productType === "dealer" && (
+            <>
+              <input type="number" name="dealerCost" placeholder="Dealer Cost" value={newProduct.dealerCost} onChange={handleInputChange} required />
+            </>
+          )}
+
+          {productType === "customer" && (
+            <>
+              <input type="number" name="customerCost" placeholder="Customer Cost" value={newProduct.customerCost} onChange={handleInputChange} required />
+            </>
+          )}
+
           <input type="number" name="gst" placeholder="GST (%)" value={newProduct.gst} onChange={handleInputChange} required />
+          <input type="number" name="moq" placeholder="MOQ" value={newProduct.moq} onChange={handleInputChange} required />
           <input type="number" name="stockQuantity" placeholder="Stock Quantity" value={newProduct.stockQuantity} onChange={handleInputChange} required />
+          <label>
+            <input type="checkbox" name="stockAvailable" checked={newProduct.stockAvailable} onChange={handleInputChange} /> Stock Available
+          </label>
           <input type="file" accept="image/*" onChange={handleImageChange} />
           <button type="submit" className="btn btn-success">{isEditMode ? "Update Product" : "Add Product"}</button>
         </form>
@@ -120,9 +198,11 @@ const Products = () => {
             <th>Subcategory</th>
             <th>Cost</th>
             <th>Dealer Cost</th>
-            <th>Discount</th>
+            <th>Customer Cost</th>
             <th>GST</th>
+            <th>MOQ</th>
             <th>Stock Quantity</th>
+            <th>Stock Available</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -136,18 +216,20 @@ const Products = () => {
                 <td>{product.subcategory}</td>
                 <td>{product.cost}</td>
                 <td>{product.dealerCost}</td>
-                <td>{product.discount}</td>
+                <td>{product.customerCost}</td>
                 <td>{product.gst}</td>
+                <td>{product.moq}</td>
                 <td>{product.stockQuantity}</td>
+                <td>{product.stockAvailable ? "Yes" : "No"}</td>
                 <td>
-                  <button className="btn btn-warning mx-2" onClick={() => handleEdit(product)}>Edit</button>
-                  <button className="btn btn-danger" onClick={() => handleDelete(product.id)}>Delete</button>
+                  <button onClick={() => handleEdit(product)} className="btn btn-warning btn-sm">Edit</button>
+                  <button onClick={() => handleDelete(product.id)} className="btn btn-danger btn-sm">Delete</button>
                 </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="10" className="text-center">No products found.</td>
+              <td colSpan="12">No products available</td>
             </tr>
           )}
         </tbody>

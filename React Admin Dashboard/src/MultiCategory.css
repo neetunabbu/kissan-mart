@@ -1,0 +1,93 @@
+.main-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+  }
+  
+  .main-title {
+    margin-bottom: 20px;
+  }
+  
+  .multiCategory-form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 20px auto;
+  }
+  
+  .multiCategory-form div {
+    margin-bottom: 15px;
+  }
+  
+  .multiCategory-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .multiCategory-form input,
+  .multiCategory-form select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .multiCategory-form button {
+    width: 100%;
+  }
+  
+  .subcategory-list {
+    margin-top: 20px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .subcategory-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+  
+  .subcategory-table th,
+  .subcategory-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .subcategory-table th {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .subcategory-table img {
+    border-radius: 4px;
+  }
+  
+  .error-message {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .btn-warning {
+    background-color: #ffc107;
+    border: none;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    border: none;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+  }
+  
+  .btn-success {
+    background-color: #28a745;
+  }
+  
